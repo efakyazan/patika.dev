@@ -1,0 +1,35 @@
+In this study, we tried to repeat all the topics we talked about so far through 5 different scenarios. Below you can find the relevant scenarios.
+
+1-How many movies in the movie table have at least 4 'e' or 'E' characters in their titles?
+---
+select count(*) from film
+where title ilike '%e%e%e%e%'
+-----------------------------------------------------------------------------------------------------------------------------
+2-Sort the category names and the number of movies per category from the category table.
+---
+select count(*), category.name from category
+join film_category on film_category.category_id = category.category_id
+join film on film.film_id = film_category.film_id
+group by category.name
+-----------------------------------------------------------------------------------------------------------------------------
+3-Which rating category has the highest number of movies in the movie table?
+---
+select count(*), rating from film
+group by rating
+order by count(*) desc
+limit 1
+-----------------------------------------------------------------------------------------------------------------------------
+4-From the movie table, list the 4 movies with the longest and the lowest replacenet_cost, starting with the character 'K'.
+---
+select title, length, replacement_cost from film
+where title like 'K%'
+order by length desc, replacement_cost asc
+limit 3
+-----------------------------------------------------------------------------------------------------------------------------
+5-What is the name of the customer who made the most purchases in the customer table?
+---
+select sum(amount), customer.first_name, customer.last_name from payment
+join customer on customer.customer_id = payment.customer_id
+group by payment.customer_id, customer.first_name, customer.last_name
+order by sum(amount) desc
+limit 1
